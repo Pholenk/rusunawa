@@ -34,7 +34,7 @@ class Model_penyewa extends CI_Model {
 	}   
 	public function browse_penyewa()
 	{
-		$penyewa=$this->db->get('penyewa')->result();
+		$penyewa = $this->db->get('penyewa')->result();
 		return $penyewa;
 	}
 
