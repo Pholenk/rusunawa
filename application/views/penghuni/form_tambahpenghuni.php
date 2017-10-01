@@ -5,70 +5,69 @@
 
 		
 
-<form class ="horizontal" method="POST" action="<?php echo base_url();?>index.php/penghuni/simpan" onsubmit="return cekform();">
+<form class ="horizontal" method="POST" action="<?php echo base_url();?>index.php/penghuni/simpan/<?php echo $nik;?>" onsubmit="return cekform();">
 	<div class="page-header">
-		<h1>
-			Tambah Data Penghuni
-			  
-		</h1>
+		<h1>Data Penghuni</h1>
 	</div>
 	<div class="col-xs-6">
 		<div class="form-group">
-			<label class="control-label">NIK</label>
+			<label class="control-label col-xs-6">NIK</label>
 			<div class="controls">
-				<input type="text" name="nik" placeholder="NIK" class="span1" value="<?php echo $nik;?>">
+				<input type="text" name="nik" placeholder="NIK" class="span1" value="<?php echo $nik;?>" <?php echo(!empty($nik) ? 'disabled' : '')?> required>
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label">Nama</label>
+			<label class="control-label col-xs-6">Nama</label>
 			<div class="controls">
-				<input type="text" name="nama" placeholder="Nama Penghuni" class="span1" value="<?php echo $nama;?>">
+				<input type="text" name="nama" placeholder="Nama Penghuni" class="span1" value="<?php echo $nama;?>" required>
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label">Pekerjaan</label>
+			<label class="control-label col-xs-6">Pekerjaan</label>
 			<div class="controls">
-				<input type="text" name="pekerjaan" placeholder="Pekerjaan" class="span1" value="<?php echo $pekerjaan;?>">
+				<input type="text" name="pekerjaan" placeholder="Pekerjaan" class="span1" value="<?php echo $pekerjaan;?>" required>
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label">Penghasilan</label>
+			<label class="control-label col-xs-6">Penghasilan</label>
 			<div class="controls">
-				<input type="text" name="penghasilan" placeholder="Penghasilan" class="span1" value="<?php echo $penghasilan;?>">
+				<input type="text" name="penghasilan" placeholder="Penghasilan" class="span1" value="<?php echo $penghasilan;?>" required>
 			</div>		
 		</div>
 	</div>
 	<div class="col-xs-6">
 		<div class="form-group">
-			<label class="control-label">No Perjanjian</label>
+			<label class="control-label col-xs-6">No Perjanjian</label>
 			<div class="controls">
-				<input type="text" name="no_perjanjian" placeholder="No Perjanjian" class="span1" value="<?php echo $no_perjanjian;?>">
+				<input type="text" name="id_transaksi" placeholder="No Perjanjian" class="span1" value="<?php echo $id_transaksi;?>" required>
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label">Kamar</label>
+			<label class="control-label col-xs-6">Kamar</label>
 			<div class="controls">
-				<input type="text" name="id_kamar" placeholder="ID Kamar" class="span1" value="<?php echo $id_kamar;?>">
+				<input type="text" name="id_kamar" placeholder="ID Kamar" class="span1" value="<?php echo $id_kamar;?>" required>
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label">Tanggal Awal</label>
+			<label class="control-label col-xs-6">Tanggal Awal</label>
 			<div class="controls">
-				<input class="form-control" type=date name="tgl_awal"  class="span1" value="<?php echo $tgl_awal;?>">
+				<input type=date name="tgl_awal" class="span1" value="<?php echo date('Y-m-d',strtotime($tgl_awal));?>" required>
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label">Tanggal Akhir</label>
+			<label class="control-label col-xs-6">Tanggal Akhir</label>
 			<div class="controls">
-				<input class="form-control" type=date name="tgl_akhir"  class="span1" value="<?php echo $tgl_akhir;?>" >
+				<input type=date name="tgl_akhir" class="span1" value="<?php echo date('Y-m-d',strtotime($tgl_akhir));?>" required>
 			</div>
 		</div>
 	</div>
 	<br>
 	<div>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<button type="submit" class="btn btn-primary btn-small">Simpan</button>
-		<button type="reset" class="btn btn-default btn-small">Batal</button>
-		
+		<div class="col-xs-6">
+			<button type="submit" class="btn btn-primary btn-small pull-right">Simpan</button>
+		</div>
+		<div class="col-xs-6">
+			<a href='<?php echo base_url();?>index.php/penghuni'><button type="button" class="btn btn-default btn-small">Batal</button>
+		</div>
 	</div>
 </form>
