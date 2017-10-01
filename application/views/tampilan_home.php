@@ -1,7 +1,4 @@
 <!DOCTYPE html>
-<?php 
-error_reporting(0);
-?>
 <html lang="en">
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -423,7 +420,7 @@ error_reporting(0);
 					</div>
 				</div><!-- /.sidebar-shortcuts -->
 
-				<?php echo $this->load->view('tampilan_menu'); ?>
+				<?php $this->load->view('tampilan_menu'); ?>
 
 				<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
 					<i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
@@ -454,10 +451,6 @@ error_reporting(0);
 
 					<div class="page-content">
 						<div class="ace-settings-container" id="ace-settings-container">
-							<div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
-								<i class="ace-icon fa fa-cog bigger-130"></i>
-							</div>
-
 							<div class="ace-settings-box clearfix" id="ace-settings-box">
 								<div class="pull-left width-50">
 									<div class="ace-settings-item">
@@ -520,20 +513,10 @@ error_reporting(0);
 							</div><!-- /.ace-settings-box -->
 						</div><!-- /.ace-settings-container -->
 
-						<div class="page-header position-relativde">
-							<h1>
-								<?php echo $judul; ?>
-								<small>
-									<i class="ace-icon fa fa-angle-double-right"></i>
-									<?php echo $sub_judul; ?>
-								</small>
-							</h1>
-						</div><!-- /.page-header -->
-
 						<div class="row">
 							<div class="col-xs-12">
 								<!-- PAGE CONTENT BEGINS -->
-								<?php echo $this->load->view($content); ?>
+								<?php $this->load->view($content); ?>
 							
 								<!-- PAGE CONTENT ENDS -->
 							</div><!-- /.col -->
