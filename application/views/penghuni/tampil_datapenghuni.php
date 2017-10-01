@@ -33,7 +33,7 @@
 	<tbody>
 		<tr>
 			<?php $no=1;
-			 foreach ($data->result() as $row){
+			 foreach ($data as $row){
 			 	?>
 			<td><?php echo $no++; ?> </td>
 			
