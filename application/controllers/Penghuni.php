@@ -7,10 +7,11 @@ class Penghuni extends CI_Controller {
 	public function index()
 	{
 		$this->model_security->getsecurity();
+		$this->load->model('model_penyewa');
 		$isi['content'] ='penghuni/tampil_datapenghuni';
 		$isi['judul']='master';
 		$isi['sub_judul']='penghuni';
-		$isi['data']=$this->db->get('penyewa');
+		$isi['data']=$this->model_penyewa->browse_penyewa();
 		$this->load->view('tampilan_home',$isi);
 	} 
 	public function tambah()
@@ -147,19 +148,17 @@ class Penghuni extends CI_Controller {
 		redirect('penghuni');
 	}
 
-	public function delete()
-	{ 
-	$this->model_security->getsecurity();
-	$this->load->model('model_penyewa');
-
-	$key=$this->uri->segment(3);
-	$this->db->where('nik',$key);
-	$query=$this->db->get('penyewa');
-
-	if ($query->num_rows()>0)
+	public function delete($nik)
 	{
-		$this->model_penyewa->getdelete($key);
-	}
+		$this->model_security->getsecurity();
+		$this->load->model('model_penyewa');
+		$this->load->model('model_transaksi');
+
+		if ($this->model_penyewa->dataExist($nik) > 0)
+		{
+			$this->model_transaksi->getdelete($nik);
+			$this->model_penyewa->getdelete($nik);
+		}
 		redirect('penghuni');
 
 	}
