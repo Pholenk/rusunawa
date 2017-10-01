@@ -55,4 +55,9 @@ class Model_transaksi extends CI_Model {
 		$this->db->select('id_transaksi,id_kamar,nik,tgl_awal, tgl_akhir')->from('transaksi')->like('id_transaksi',$id_transaksi);
 		return $this->db->get()->result();
 	}
+
+	public function dataExist($id_transaksi)
+	{
+		return $this->db->get_where('transaksi', array('id_transaksi'=>$id_transaksi))->num_rows();
+	}
 }
