@@ -3,18 +3,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Model_transaksi extends CI_Model {
 
-
 	public function getdata($key)
 	{
 		$this->db->where('id_transaksi',$key);
 		$hasil=$this->db->get('transaksi');
 		return $hasil;
 	}
+
 	public function getupdate($key,$data)
 	{
 		$this->db->where('id_transaksi',$key);
 		$this->db->update('transaksi',$data);
 	}
+
 	public function getinsert($data)
 	{
 		$status = FALSE;
@@ -24,13 +25,15 @@ class Model_transaksi extends CI_Model {
 		}
 		return $status;
 	}
+
 	public function getdelete($key)
 	{
-		$this->db->where('id_transaksi',$key);
+		$this->delete_det_transaksi($key);
+		$this->db->where('nik',$key);
 		$this->db->delete('transaksi');
 	}
 
-	/*
+	/**
 	 * fungsi simpan data detail transaksi
 	 * @param mixed data transaksi
 	 * @return bool
@@ -43,6 +46,16 @@ class Model_transaksi extends CI_Model {
 			$status = TRUE;
 		}
 		return $status;
+	}
+
+	/**
+	 * fungsi hapus detail transaksi 
+	 * @param string nik
+	 * @return bool
+	 */
+	public function delete_det_transaksi($nik)
+	{
+		return $this->db->query("delete from detail_transaksi where id_transaksi = (select id_transaksi from transaksi where nik = '".$nik."')");
 	}
 
 	public function browse_transaksi()
