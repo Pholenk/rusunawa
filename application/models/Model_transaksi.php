@@ -64,6 +64,20 @@ class Model_transaksi extends CI_Model {
 		return $transaksi;
 	}
 
+	/**
+	 * fungsi untuk mendapatkan data transaksi paling terakhir dari detail transaksi
+	 * @param string id_transaksi
+	 * @return string tgl_transaksi
+	 */
+	public function getLastTransaksi($id_transaksi)
+	{
+		$this->db->select('tgl_transaksi')->from('detail_transaksi');
+		$this->db->where('id_transaksi', $id_transaksi);
+		$this->db->order_by('tgl_transaksi', 'DESC');
+		$this->db->limit('1');
+		return $this->db->get()->result();
+	}
+
 	function search($id_transaksi){
 		$this->db->select('id_transaksi,id_kamar,nik,tgl_awal, tgl_akhir')->from('transaksi')->like('id_transaksi',$id_transaksi);
 		return $this->db->get()->result();
