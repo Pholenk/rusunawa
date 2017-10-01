@@ -6,8 +6,10 @@ class Model_penyewa extends CI_Model {
 
 	public function getdata($key)
 	{
-		$this->db->where('nik',$key);
-		$hasil=$this->db->get('penyewa')->result();
+		$this->db->select('penyewa.*,transaksi.*')->from('penyewa');
+		$this->db->join('transaksi', 'transaksi.nik = penyewa.nik');
+		$this->db->where('penyewa.nik',$key);
+		$hasil=$this->db->get()->result();
 		return $hasil;
 	}
 	public function getupdate($key,$data)
@@ -39,5 +41,13 @@ class Model_penyewa extends CI_Model {
 	function search($nik){
 		$this->db->select('nik,nama,pekerjaan,penghasilan')->from('penyewa')->like('nik',$nik);
 		return $this->db->get()->result();
+	}
+
+	/**
+	 * fungsi ini digunakan untuk validasi
+	 */
+	public function dataExist($nik)
+	{
+		return $this->db->get_where('penyewa', array('nik'=>$nik))->num_rows();
 	}
 }
