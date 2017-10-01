@@ -24,6 +24,10 @@ class Penghuni extends CI_Controller {
 		$isi['nama']="";
 		$isi['pekerjaan']="";	
 		$isi['penghasilan']="";
+		$isi['id_transaksi'] = "";
+		$isi['id_kamar'] = "";
+		$isi['tgl_awal'] = Null;
+		$isi['tgl_akhir'] = Null;
 		
 		$this->load->view('tampilan_home',$isi);
 	}
@@ -52,64 +56,83 @@ class Penghuni extends CI_Controller {
 		if(!empty($nik))
 		{
 			$this->model_security->getsecurity();
+			$this->load->model('model_penyewa');
 			$isi['content'] ='penghuni/form_tambahpenghuni';
 			$isi['judul']='master';
 			$isi['sub_judul']='edit penghuni';
 
-		}
-		else
-		{
-		}
-		
-		$this->db->where('nik',$key);
-		$query=$this->db->get('penyewa');
-
-		if($query->num_rows()>0)
-		{
-			foreach ($query->result() as $row)
+			$result = $this->model_penyewa->getdata($nik);
+			foreach ($result as $row)
 			{
-				
 				$isi['nik']=$row->nik;
 				$isi['nama']=$row->nama;
 				$isi['pekerjaan']=$row->pekerjaan;	
 				$isi['penghasilan']=$row->penghasilan;
-				
+				$isi['id_transaksi'] = $row->id_transaksi;
+				$isi['id_kamar'] = $row->id_kamar;
+				$isi['tgl_awal'] = $row->tgl_awal;
+				$isi['tgl_akhir'] = $row->tgl_akhir;
 			}
 
+			$this->load->view('tampilan_home',$isi);
 		}
-		else {
-				
-				$isi['nik']="";
-				$isi['nama']="";
-				$isi['pekerjaan']="";	
-				$isi['penghasilan']="";
-				
+		else
+		{
+			redirect('penghuni');
 		}
-		$this->load->view('tampilan_home',$isi);
-
 	}
 
-	public function simpan()
+	public function simpan($nik = '')
 	{
+		// load model yang dibutuhkan
 		$this->model_security->getsecurity();
-		$key=$this->input->post('nik');
-		$data['nik'] =$this->input->post('nik');
-		$data['nama']=$this->input->post('nama');
-		$data['pekerjaan']=$this->input->post('pekerjaan');
-		$data['penghasilan']=$this->input->post('penghasilan');
-		$transaksi['id_transaksi']=$this->input->post('no_perjanjian');
-		$transaksi['id_kamar']=$this->input->post('id_kamar');
-		$transaksi['nik']=$this->input->post('nik');
-		$transaksi['tgl_awal']=$this->input->post('tgl_awal');
-		$transaksi['tgl_akhir']=$this->input->post('tgl_akhir');
-		
 		$this->load->model('model_penyewa');
 		$this->load->model('model_transaksi');
-		$query=$this->model_penyewa->getdata($key);
-		
-		if($query->num_rows()>0)
+
+		// inisialisasi variabel kunci penghuni/penyewa
+		if (empty($nik))
 		{
-			$this->model_penyewa->getupdate($key,$data);
+			// jika url yang diakses localhost/rusunawa/simpan/
+			// maka variabel kunci diberi nilai sesuai inputan nik
+			$keyPenyewa = $this->input->post('nik');
+		}
+		else
+		{
+			// jika url yang diakses localhost/rusunawa/edit/xxxxx
+			// maka variabel kunci diberi nilai sesuai xxxxx
+			$keyPenyewa = $nik;
+		}
+
+		// inisialisasi variabel kunci transaksi diambil dari inputan id_transaksi
+		$keyTransaksi = $this->input->post('id_transaksi');
+
+		// inisialisasi data penyewa / penghuni
+		$data['nik'] =$keyPenyewa;
+		$data['nama'] = $this->input->post('nama');
+		$data['pekerjaan'] = $this->input->post('pekerjaan');
+		$data['penghasilan'] = $this->input->post('penghasilan');
+
+		// inisialisasi data transaksi
+		$transaksi['id_transaksi'] = $keyTransaksi;
+		$transaksi['id_kamar'] = $this->input->post('id_kamar');
+		$transaksi['nik'] = $keyPenyewa;
+		$transaksi['tgl_awal'] = $this->input->post('tgl_awal');
+		$transaksi['tgl_akhir'] = $this->input->post('tgl_akhir');
+		
+		// pengecekan data penyewa
+		if($this->model_penyewa->dataExist($keyPenyewa) > 0)
+		{
+			$this->model_penyewa->getupdate($keyPenyewa,$data);
+
+			// pengecekan data transaksi
+			if($this->model_transaksi->dataExist($keyTransaksi) > 0)
+			{
+				$this->model_transaksi->getupdate($keyTransaksi,$transaksi);
+			}
+			else
+			{
+				$this->model_transaksi->getinsert($transaksi);
+			}
 			$this->session->set_flashdata('info','data sukses diupdate !');
 		}
 		else{
