@@ -25,11 +25,10 @@
 			<th >No.</th>
 			<th >ID Transaksi</th>
 			<th>ID Kamar</th>
-			<th >NIK</th>
-		
-			
+			<th >NIK</th>			
 			<th>Tanggal Awal</th>
 			<th>Tanggal Akhir</th>
+			<th>Status Bulan Ini</th>
 			<th >Aksi</th>
 					
 		</tr>
@@ -39,16 +38,15 @@
 			<?php 
 			 $no=1;
 
-			 foreach ($data->result() as $row){
+			 foreach ($data as $row){
 			 	?>
 			<td><?php echo $no++; ?> </td>
-			<td> <?php echo $row->id_transaksi; ?></td>
-		
+			<td><?php echo $row->id_transaksi; ?></td>
 			<td><?php echo $row->id_kamar; ?> </td>
 			<td><?php echo $row->nik; ?> </td>
-			
 			<td><?php echo $row->tgl_awal; ?> </td>
 			<td><?php echo $row->tgl_akhir; ?> </td>
+			<td><?php echo ($tgl[''.$row->id_transaksi] === date('Y-m-d', now()) ? 'Sudah Bayar' : 'Belum Bayar') ?> </td>
 			<td> 
 				<a href ="<?php echo base_url();?>index.php/transaksi/edit/<?php echo $row->id_transaksi; ?>">edit</a>
 				<a href ="<?php echo base_url();?>index.php/transaksi/delete/<?php echo $row->id_transaksi; ?>" onclick="return confirm ('Anda yakin ingin menghapus data ini ?')">delete</a>
