@@ -42,8 +42,8 @@
 			<td><?php echo $row->pekerjaan;?> </td>
 			<td><?php echo $row->penghasilan;?> </td>
 			<td> 
-				<a href ="<?php echo base_url();?>index.php/penghuni/edit/<?php echo $row->id_penyewa; ?>">edit</a>
-				<a href ="<?php echo base_url();?>index.php/penghuni/delete/<?php echo $row->id_penyewa; ?>" onclick="return confirm ('Anda yakin ingin menghapus data ini ?')">delete</a>
+				<a href ="<?php echo base_url();?>index.php/penghuni/edit/<?php echo $row->nik; ?>">edit</a>
+				<a href ="<?php echo base_url();?>index.php/penghuni/delete/<?php echo $row->nik; ?>" onclick="return confirm ('Anda yakin ingin menghapus data ini ?')">delete</a>
 
 			</td>
 		</tr>
