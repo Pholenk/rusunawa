@@ -7,13 +7,15 @@ class Kontrak extends CI_Controller {
 	public function index()
 	{
 		$this->model_security->getsecurity();
+		$this->load->model('model_transaksi');
 		$isi['content'] ='transaksi/tampil_kontrak';
 		$isi['judul']='Transaksi';
 		$isi['sub_judul']='Lihat Kontrak';
-		
+		$isi['data']= $this->model_transaksi->browse_transaksi();
+		foreach ($this->model_transaksi->browse_transaksi() as $trans) {
+			$isi['tgl'][''.$trans->id_transaksi] = $this->model_transaksi->getLastTransaksi($trans->id_transaksi);
+		}
 
-
-		$isi['data']=$this->db->get('transaksi');
 		$this->load->view('tampilan_home',$isi);
 	}
 
